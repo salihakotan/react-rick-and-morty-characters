@@ -14,11 +14,95 @@ code {
 
 
 .App{
-  padding: 100px;
-  background-color: rgb(207, 202, 255);
+  background-color:white;
 }
 
 .searchInput {
-  padding: 10px;
-  width:300px
+  padding: 15px;
+  width:50%
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+  margin: 70px;
+}
+
+
+.leftFilterAreaContainer{
+  background-color: rgb(126, 225, 255);
+  width:20%;
+  margin-right: 30px;
+  padding: 15px;
+}
+
+.rightPageContentAreaContainer{
+width:100%;
+}
+
+.charactersGrid{
+  background-color: rgb(220, 247, 255);
+  grid-template-columns: repeat(4,1fr);
+  display: grid;
+  justify-content: center;
+  padding: 50px;
+  gap: 10px;
+}
+
+.header{
+  text-align: center;
+}
+
+
+.characterItemBox{
+padding: 10px;
+}
+
+.characterItemBox img{
+width: 80%;
+}
+
+.characterItemBox span{
+  display: block;
+}
+
+.speciesNameSpan {
+  font-weight: bold;
+  color:#616161;
+  font-size: 14px;
+}
+
+.characterNameSpan{
+  font-size: 18px;
+  color:black;
+  font-weight: bold;
+}
+
+.locationNameSpan{
+  font-size: 16px;
+}
+
+.clearFiltersBtn{
+  height: 20px;
+}
+
+.filtersHeaderArea{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hitsPerPageSelect{
+  float: right;
+  width: 130px;
+  margin: 30px 70px 0px 0px;
+  padding: 5px;
+}
+
+.header{
+  background-image: url("https://picsum.photos/id/13/1400/400");
+ background-size:cover;
+ background-repeat: no-repeat;
+ height: 250px;
+ padding: 50px;
 }
