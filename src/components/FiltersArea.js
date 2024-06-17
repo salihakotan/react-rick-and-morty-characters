@@ -1,8 +1,13 @@
 import { useQuery } from "@apollo/client";
-import React from "react";
+import React, { useState } from "react";
 import { GET_LOCATIONS_QUERY } from "../queries";
 
 function FiltersArea() {
+
+
+    const [locationInput,setLocationInput] = useState("")
+
+
   const { data: locationsData, loading: locationsLoading } =
     useQuery(GET_LOCATIONS_QUERY);
 
@@ -10,7 +15,13 @@ function FiltersArea() {
     return <div>Locations Loading...</div>;
   }
 
-  const locations = locationsData.locations.results;
+  let locations = locationsData.locations.results;
+
+
+  const searchLocationInputHandleChange = (e) => {
+        setLocationInput(e.target.value)        
+  }
+  
 
   return (
     <div>
@@ -25,37 +36,42 @@ function FiltersArea() {
       <div className="checkboxArea">
         <input type="checkbox" />
         <label>Male</label>
-        <span> 445</span>
+        <span className="filterCountBoxSpan"> 445</span>
       </div>
       <div className="checkboxArea">
         <input type="checkbox" />
         <label>Female</label>
-        <span> 445</span>
+        <span className="filterCountBoxSpan"> 445</span>
       </div>
       <div className="checkboxArea">
         <input type="checkbox" />
         <label>unknown</label>
-        <span> 445</span>
+        <span className="filterCountBoxSpan"> 445</span>
       </div>
 
       <h5>SPECIES</h5>
       <div className="checkboxArea">
         <input type="checkbox" />
         <label>Male</label>
-        <span> 445</span>
+        <span className="filterCountBoxSpan"> 445</span>
       </div>
 
       <h5>LOCATION</h5>
-      <input className="searchLocationInput" />
+      <input value={locationInput} onChange={searchLocationInputHandleChange} className="searchLocationInput" />
 
-      {locationsData && (
-       locations.map((location,i)=> (
-        <div key={i} className="checkboxArea">
+      {locationsData &&  (
+       locations.map((location,i)=> {
+
+        if(!location.name.toLowerCase().includes(locationInput.toLowerCase())){
+            return false
+        }
+
+       return <div key={i} className="checkboxArea">
           <input type="checkbox" />
           <label>{location.name}</label>
-          <span> 445</span>
+          <span className="filterCountBoxSpan"> 445</span>
         </div>
-       ))
+       })
       )}
     </div>
   );

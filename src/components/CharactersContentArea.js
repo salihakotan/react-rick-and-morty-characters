@@ -2,7 +2,10 @@ import { useQuery } from "@apollo/client";
 import React from "react";
 import { GET_CHARACTERS_QUERY } from "../queries";
 
-function CharactersContentArea() {
+function CharactersContentArea({searchInput}) {
+   
+    console.log("content searchinput ", searchInput)
+
   const { loading, error, data } = useQuery(GET_CHARACTERS_QUERY);
 
   if (loading) {
@@ -19,8 +22,14 @@ function CharactersContentArea() {
 
   return (
     <div className="charactersGrid">
-      {results.map((result) => (
-        <div key={result.id} className="characterItemBox">
+      {results.map((result) => {
+
+        if(!result.name.toLowerCase().includes(searchInput.toLowerCase()) && !result.location.name.toLowerCase().includes(searchInput.toLowerCase())){
+            return false
+        }
+
+
+        return <div key={result.id} className="characterItemBox">
           <img
             src={result.image}
             alt="characterImage"
@@ -29,7 +38,10 @@ function CharactersContentArea() {
           <span className="characterNameSpan">{result.name}</span>
           <span className="locationNameSpan">{result.location.name}</span>
         </div>
-      ))}
+
+      }
+      
+      )}
     </div>
   );
 }

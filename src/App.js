@@ -1,14 +1,23 @@
 import CharactersContentArea from "./components/CharactersContentArea";
 import FiltersArea from "./components/FiltersArea";
-import SearchForm from "./components/SearchForm";
+import { useState } from "react";
 
 
 function App() {
+
+  const [searchInput,setSearchInput] = useState("")
+
+  const handleChangeSearchInput = (e) => {
+    setSearchInput(e.target.value)        
+}
+
+
+
   return (
     <div className="App">
     <div className="header">
         <h1 className="siteTitle">Rick and Morty Characters</h1>
-        <SearchForm/>
+        <input onChange={handleChangeSearchInput} className='searchInput' placeholder='Search'/>
         </div>
 
       
@@ -25,7 +34,7 @@ function App() {
 
           <div className="rightPageContentAreaContainer">
         
-            <CharactersContentArea/>
+            <CharactersContentArea searchInput={searchInput}/>
           </div>
 
         </div>
