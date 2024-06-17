@@ -14,6 +14,8 @@ function App() {
       
         <select className="hitsPerPageSelect">
           <option>16 hits per page</option>
+          <option>32 hits per page</option>
+          <option>64 hits per page</option>
         </select>
         
         <div className="container">

@@ -14,3 +14,8 @@ query {
   }
 }
 `
+
+export const GET_LOCATIONS_QUERY=gql`
+query getLocations{
+  locations{results{name}}
+}`
