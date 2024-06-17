@@ -1,56 +1,37 @@
-import React from 'react'
+import { useQuery } from "@apollo/client";
+import React from "react";
+import { GET_CHARACTERS_QUERY } from "../queries";
 
 function CharactersContentArea() {
+  const { loading, error, data } = useQuery(GET_CHARACTERS_QUERY);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const { results } = data.characters;
+
+  console.log(results);
+
   return (
-    <div className='charactersGrid'>
-
-
-    <div className='characterItemBox'>
-    <img src="https://picsum.photos/id/237/200/300" alt='characterImage'/>
-    <span className='speciesNameSpan'>Human</span>
-    <span className='characterNameSpan'>High Pilot</span>
-    <span className='locationNameSpan'>Planet Squanch</span>
+    <div className="charactersGrid">
+      {results.map((result) => (
+        <div key={result.id} className="characterItemBox">
+          <img
+            src={result.image}
+            alt="characterImage"
+          />
+          <span className="speciesNameSpan">{result.species}</span>
+          <span className="characterNameSpan">{result.name}</span>
+          <span className="locationNameSpan">{result.location.name}</span>
+        </div>
+      ))}
     </div>
-
-    <div className='characterItemBox'>
-    <img src="https://picsum.photos/id/237/200/300" alt='characterImage'/>
-    <span className='speciesNameSpan'>Human</span>
-    <span className='characterNameSpan'>High Pilot</span>
-    <span className='locationNameSpan'>Planet Squanch</span>
-    </div>
-
-    <div className='characterItemBox'>
-    <img src="https://picsum.photos/id/237/200/300" alt='characterImage'/>
-    <span className='speciesNameSpan'>Human</span>
-    <span className='characterNameSpan'>High Pilot</span>
-    <span className='locationNameSpan'>Planet Squanch</span>
-    </div>
-
-    <div className='characterItemBox'>
-    <img src="https://picsum.photos/id/237/200/300" alt='characterImage'/>
-    <span className='speciesNameSpan'>Human</span>
-    <span className='characterNameSpan'>High Pilot</span>
-    <span className='locationNameSpan'>Planet Squanch</span>
-    </div>
-
-    <div className='characterItemBox'>
-    <img src="https://picsum.photos/id/237/200/300" alt='characterImage'/>
-    <span className='speciesNameSpan'>Human</span>
-    <span className='characterNameSpan'>High Pilot</span>
-    <span className='locationNameSpan'>Planet Squanch</span>
-    </div>
-
-    <div className='characterItemBox'>
-    <img src="https://picsum.photos/id/237/200/300" alt='characterImage'/>
-    <span className='speciesNameSpan'>Human</span>
-    <span className='characterNameSpan'>High Pilot</span>
-    <span className='locationNameSpan'>Planet Squanch</span>
-    </div>
-
-       
-     
-    </div>
-  )
+  );
 }
 
-export default CharactersContentArea
+export default CharactersContentArea;
