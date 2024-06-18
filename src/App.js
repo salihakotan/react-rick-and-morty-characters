@@ -33,7 +33,6 @@ function App() {
 }
 
 const handleChangePageSize = (e) => {
-  console.log(e.target.value)
   setPageSize(e.target.value)        
 }
 

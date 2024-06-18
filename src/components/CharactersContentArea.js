@@ -9,7 +9,7 @@ function CharactersContentArea({ filters, searchInput, pageSize }) {
         variables: {
           gender: filters.gender,
           species: filters.species,
-          location: filters.location,
+        //   location: filters.location,
         },
       });
     
@@ -30,6 +30,11 @@ function CharactersContentArea({ filters, searchInput, pageSize }) {
 
 
 
+  const filteredResults = searchResults.filter((result) =>
+    filters.location ? result.location.name === filters.location : true
+  );
+
+
   return (
     <div>
       <List
@@ -38,7 +43,7 @@ function CharactersContentArea({ filters, searchInput, pageSize }) {
       column: 4,
     }}
         pagination={{pageSize:pageSize}}
-        dataSource={searchResults}
+        dataSource={filteredResults}
         renderItem={(result, index) => {
        
 
