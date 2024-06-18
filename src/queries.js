@@ -1,47 +1,40 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
-export const GET_CHARACTERS_QUERY=gql`
-query {
-  characters{
-    results
-    {
-      id
-      name
-      species
-      gender
-      location{name}
-      image    }
-  }
-}
-`
-
-export const GET_SEARCH_QUERY=gql`
-query {
-  characters{
-    results
-    {
-      name
-      location{name}
+export const GET_CHARACTERS_QUERY = gql`
+  query GetCharacters($gender: String, $species: String) {
+    characters(filter: { gender: $gender, species: $species }) {
+      results {
+        id
+        name
+        species
+        gender
+        location {
+          name
+        }
+        image
       }
-  }
-}
-`
-
-export const GET_LOCATIONS_QUERY=gql`
-query getLocations{
-  locations{results{name}}
-}`
-
-
-export const GET_CHARACTERS_GENDER_QUERY=gql`
-query {
-  characters{
-    results
-    {
-      gender
+      info {
+        count
+      }
     }
   }
-}
-`
+`;
 
+export const GET_LOCATIONS_QUERY = gql`
+  query GetLocations {
+    locations {
+      results {
+        name
+      }
+    }
+  }
+`;
 
+export const QUERYTEST = gql`
+  query TestQuery {
+    testData {
+      id
+      name
+    }
+  }
+`;

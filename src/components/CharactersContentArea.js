@@ -1,41 +1,34 @@
 import { useQuery } from "@apollo/client";
-import React, { useState } from "react";
+import React  from "react";
 import { GET_CHARACTERS_QUERY } from "../queries";
 import { Card, List } from "antd";
 
-function CharactersContentArea({ searchInput, pageSize }) {
-  console.log("content searchinput ", searchInput);
+function CharactersContentArea({ filters, searchInput, pageSize }) {
 
-  const { loading, error, data } = useQuery(GET_CHARACTERS_QUERY);
-
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error.message}</div>;
-  }
-
-  const { results } = data.characters;
-
-  console.log(results);
-
-  const searchResults = []
-
-
-   results.map((result)=> {
-    if (
-        !result.name.toLowerCase().includes(searchInput.toLowerCase()) &&
-        !result.location.name
-          .toLowerCase()
-          .includes(searchInput.toLowerCase())
-      ) {
-        return false;
+    const { loading, error, data } = useQuery(GET_CHARACTERS_QUERY, {
+        variables: {
+          gender: filters.gender,
+          species: filters.species,
+          location: filters.location,
+        },
+      });
+    
+      if (loading) {
+        return <div>Loading...</div>;
       }
+    
+      if (error) {
+        return <div>Error: {error.message}</div>;
+      }
+    
+      const { results } = data.characters;
+    
+      const searchResults = results.filter((result) =>
+        result.name.toLowerCase().includes(searchInput.toLowerCase()) ||
+        result.location.name.toLowerCase().includes(searchInput.toLowerCase())
+      );
 
-       return searchResults.push(result) 
-  })
+
 
   return (
     <div>

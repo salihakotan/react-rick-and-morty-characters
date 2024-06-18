@@ -1,13 +1,32 @@
 import CharactersContentArea from "./components/CharactersContentArea";
 import FiltersArea from "./components/FiltersArea";
 import { useState } from "react";
+import { GET_CHARACTERS_QUERY } from "./queries";
+import { useQuery } from "@apollo/client";
 
 
 function App() {
 
-  const [searchInput,setSearchInput] = useState("")
-  const [pageSize,setPageSize] = useState(8)
+  const [filters, setFilters] = useState({ gender: "", species: "", location: "" });
+  const [searchInput, setSearchInput] = useState("");
+  const [pageSize, setPageSize] = useState(8);
 
+  const { loading, error, data } = useQuery(GET_CHARACTERS_QUERY);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const results = data.characters.results;
+
+
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
 
   const handleChangeSearchInput = (e) => {
     setSearchInput(e.target.value)        
@@ -35,12 +54,12 @@ const handleChangePageSize = (e) => {
         
         <div className="container">
           <div className="leftFilterAreaContainer">
-            <FiltersArea/>
+            <FiltersArea onFilterChange={handleFilterChange}/>
           </div>
 
           <div className="rightPageContentAreaContainer">
         
-            <CharactersContentArea pageSize={pageSize} searchInput={searchInput}/>
+            <CharactersContentArea filters={filters} searchInput={searchInput} pageSize={pageSize}/>
           </div>
 
         </div>
